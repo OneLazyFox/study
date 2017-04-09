@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+    <select id="selectAllSchools" resultClass="com.neco.pojo.School">
+        select
+            name,
+            location,
+            establishTime,
+            motto,
+            type,
+            grade,
+            principle,
+            teacherNumber,
+            studentNumber,
+            logisticsNumber,
+            area,
+            ewLong,
+            nsLong
+        from
+            school
+    </select>
+
+    <select id="selectSchoolByName" parameterClass="java.lang.String" resultClass="com.neco.pojo.School">
+        SELECT
+            name,
+            location,
+            establishTime,
+            motto,
+            type,
+            grade,
+            principle,
+            teacherNumber,
+            studentNumber,
+            logisticsNumber,
+            area,
+            ewLong,
+            nsLong
+            FROM
+                school
+        WHERE
+            name
+        LIKE
+                '$name$'
+    </select>
+
+    <insert id="addSchool" parameterClass="com.neco.pojo.School">
+        <selectKey resultClass="int" keyProperty="school_no">
+            SELECT schoolPKSequence.nextVal AS school_no FROM dual
+        </selectKey>
+        INSERT
+        INTO
+        school
+        (
+         school_no,
+         name,
+         location,
+         establishTime,
+         motto,
+         type,
+         grade,
+         principle,
+         teacherNumber,
+         studentNumber,
+         logisticsNumber,
+         area,
+         ewLong,
+         nsLong
+        )
+        VALUES (
+        #school_no#,
+        #name#,
+        #location#,
+        #establishTime#,
+        #motto#,
+        #type#,
+        #grade#,
+        #principle#,
+        #teacherNumber#,
+        #studentNumber#,
+        #logisticsNumber#,
+        #area#,
+        #ewLong#,
+        #nsLong#
+        )
+    </insert>
+</sqlMap>
