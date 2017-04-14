@@ -1,7 +1,7 @@
 package guava.service.impl;
 
 import guava.entity.Area;
-import guava.neco.impl.LocalAreaCache;
+import guava.cache.local.impl.LCAreaIdToArea;
 import guava.service.AreaService;
 import org.springframework.stereotype.Service;
 
@@ -23,8 +23,13 @@ import javax.annotation.Resource;
 public class AreaServiceImpl implements AreaService {
 
     @Resource
-    private LocalAreaCache localAreaCache;
+    private LCAreaIdToArea localAreaCache;
 
+    /**
+     * 根据AreaId获取Area
+     * @param areaId int
+     * @return Area
+     */
     public Area getAreaById(int areaId) {
         return localAreaCache.get(areaId);
     }

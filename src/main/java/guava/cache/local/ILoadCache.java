@@ -1,4 +1,4 @@
-package guava.neco;
+package guava.cache.local;
 
 /**
  * <p>Title: </p>
@@ -11,7 +11,7 @@ package guava.neco;
  * @author 张小虎
  * @version 1.0
  */
-public interface LoadCache<K,V> {
+public interface ILoadCache<K,V> {
     /**
      * 从缓存中获取数据
      * @param key key

@@ -1,8 +1,8 @@
-package guava.neco.impl;
+package guava.cache.local.impl;
 
 import guava.entity.Area;
-import guava.neco.GuavaAbstractLoadingCache;
-import guava.neco.LoadCache;
+import guava.cache.guava.GuavaAbstractLoadingCache;
+import guava.cache.local.ILoadCache;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.ExecutionException;
@@ -19,9 +19,9 @@ import java.util.concurrent.ExecutionException;
  * @version 1.0
  */
 @Component("localAreaCache")
-public class LocalAreaCache extends GuavaAbstractLoadingCache<Integer,Area> implements LoadCache<Integer,Area> {
+public class LCAreaIdToArea extends GuavaAbstractLoadingCache<Integer,Area> implements ILoadCache<Integer,Area> {
 
-    private LocalAreaCache() {
+    private LCAreaIdToArea() {
         setMaximumSize(3000);
     }
     public Area get(Integer key) {
@@ -46,6 +46,6 @@ public class LocalAreaCache extends GuavaAbstractLoadingCache<Integer,Area> impl
         a.setParentCode(Integer.valueOf(key.toString().substring(0,key.toString().length()-3)));
         a.setPinyin("pinyin" + key);
 
-        return null;
+        return a;
     }
 }

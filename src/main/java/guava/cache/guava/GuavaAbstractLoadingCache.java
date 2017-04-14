@@ -1,4 +1,4 @@
-package guava.neco;
+package guava.cache.guava;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
@@ -99,6 +99,10 @@ public abstract class GuavaAbstractLoadingCache<K,V> {
 
     public Date getResetTime() {
         return resetTime;
+    }
+
+    public void setResetTime(Date resetTime) {
+        this.resetTime = resetTime;
     }
 
     public long getHighestSize() {
