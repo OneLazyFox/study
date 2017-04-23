@@ -1,8 +1,10 @@
 package guava.cache.local.impl;
 
+import guava.dao.AreaDao;
 import guava.entity.Area;
 import guava.cache.guava.GuavaAbstractLoadingCache;
 import guava.cache.local.ILoadCache;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.ExecutionException;
@@ -20,6 +22,9 @@ import java.util.concurrent.ExecutionException;
  */
 @Component("localAreaCache")
 public class LCAreaIdToArea extends GuavaAbstractLoadingCache<Integer,Area> implements ILoadCache<Integer,Area> {
+
+    @Autowired
+    private AreaDao areaDao;
 
     private LCAreaIdToArea() {
         setMaximumSize(3000);
@@ -39,13 +44,12 @@ public class LCAreaIdToArea extends GuavaAbstractLoadingCache<Integer,Area> impl
     protected Area fetchData(Integer key) {
         logger.debug("测试：正在从数据库中获取area，area id={}", key);
         //测试用，实际中使用AreaDao从DB中取数据
-        Area a = new Area();
+        /*Area a = new Area();
         a.setCode(key);
         a.setId(key);
         a.setName("地区"+key);
         a.setParentCode(Integer.valueOf(key.toString().substring(0,key.toString().length()-3)));
-        a.setPinyin("pinyin" + key);
-
-        return a;
+        a.setPinyin("pinyin" + key);*/
+        return areaDao.selectAllArea();
     }
 }

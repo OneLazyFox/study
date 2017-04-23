@@ -35,9 +35,9 @@ public abstract class GuavaAbstractLoadingCache<K,V> {
     private LoadingCache<K,V> cache;
 
     public LoadingCache<K, V> getCache() {
-        if (cache == null) {
+        if (cache == null || cache.size() == 0) {
             synchronized (this) {
-                if (cache == null) {
+                if (cache == null || cache.size() == 0) {
                     cache = CacheBuilder.newBuilder()
                             .maximumSize(maximumSize)  //缓存的最大条目
                             .expireAfterAccess(expireAfterWriteDuration,timeUnit)  //过期时间

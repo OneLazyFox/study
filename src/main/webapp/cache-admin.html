@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Cache Admin</title>
+    <meta charset="UTF-8">
+    <script src="resources/js/jquery-2.1.4.js" charset="UTF-8" type="text/javascript"></script>
+    <link href="resources/css/common.css" rel="stylesheet">
+    <link href="resources/css/table.css" rel="stylesheet">
+</head>
+<body>
+    <div id="operations">
+        Cache列表: &nbsp;
+        <input type="button" value="刷新" onclick="refreshStatsAll()"> &nbsp;
+        <input type="checkbox" id="autoRefresh" onclick="toggleAutoRefreshStats()">
+    </div>
+    <div><pre id="response" class="attention"></pre> </div>
+    <div><br><pre id="responseRawData"></pre></div>
+</body>
+
+<script>
+    var autoRefreshInterval = 3000;
+    var autoRefreshObject;
+    var requestStatsAll = {url : "/cache/admin/stats/all.do", params : "*", callback : requestStatsAllCallback};
+
+    $(function () {
+        refreshStatsAll();
+    });
+
+    function refreshStatsAll() {
+        ajaxRequest(requestStatsAll.url, requestStatsAll.params, requestStatsAll.callback);
+    }
+
+    function ajaxRequest(url, params, successCallback, contentType,	errorCallback, async) {
+        var _async = async || true;
+
+        $.ajax({
+            type : "POST",
+            url : getRootPath() + url,
+            async : _async,
+            contentType : contentType,
+            dataType : "json",
+            data : params,
+            success : successCallback,
+            error : errorCallback
+        });
+    }
+
+    function getRootPath() {
+        var curWwwPath = window.document.location.href;
+        var pathName = window.document.location.pathname;
+        var pos = curWwwPath.indexOf(pathName);
+        var localhostPath = curWwwPath.substring(0, pos);
+        var projectName = pathName.substring(0, pathName.substr(1).indexOf('/')+1);
+        return (localhostPath + projectName);
+    }
+
+    //定时刷新开关
+    function toggleAutoRefreshStats() {
+        if($("#autoRefresh").prop("checked") == true) {
+            autoRefreshObject = setInterval(refreshStatsAll, autoRefreshInterval);
+        }else {
+            clearInterval(autoRefreshObject);
+        }
+    }
+
+    function requestStatsAllCallback(jsonResult){
+        var html = "<table><tr><th>Cache名称</th> <th>数据量统计</th> <th>命中统计</th> <th>加载统计</th> <th>开始/重置时间</th> <th>操作</th> </tr>";
+        $.each(jsonResult.data, function(idx, obj){
+            html += "<tr><th>" + obj.cacheName + "</th>"
+                + "<td>" + sizeStatistics(obj) + "</td>"
+                + "<td>" + hitStatistics(obj) + "</td>"
+                + "<td>" + loadStatistics(obj) + "</td>"
+                + "<td>" + obj.resetTime +"\n\n失效时长：" + obj.survivalDuration + "（分钟）</td>"
+                + "<td>"
+                + "<a href='javascript:void(0)' onclick='resetCache(\""+obj.cacheName+"\");'>清空缓存</a>"
+                + "\t<a href='javascript:void(0)' onclick='queryDataByPage(\""+obj.cacheName+"\");'>显示详情</a>"
+                + "</td>"
+                + "</tr>";
+        });
+        html += "</table>";
+        $("#response").html(html);
+    }
+
+    function sizeStatistics(obj){
+        var c = "当前数据量/上限：" + obj.size + "/" + obj.maximumSize;
+        c += "\n历史最高数据量：" + obj.highestSize;
+        c += "\n最高数据量时间：" + obj.highestTime;
+
+        return c;
+    }
+
+    function hitStatistics(obj){
+        var c = "命中数量：" + obj.hitCount;
+        c += "\n命中比例：" + obj.hitRate;
+        c += "\n读库比例：" + obj.missRate;
+
+        return c;
+    }
+
+    function loadStatistics(obj){
+        var c = "成功加载数：" + obj.loadSuccessCount;
+        c += "\n失败加载数：" + obj.loadExceptionCount;
+        c += "\n总加载毫秒：" + obj.totalLoadTime;
+
+        return c;
+    }
+</script>
+</html>
