@@ -1,7 +1,7 @@
 package guava.web.controller;
 
 import guava.entity.Area;
-import guava.json.JsonResult;
+import com.neco.json.JsonResult;
 import guava.service.AreaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -16,7 +16,7 @@
         http://www.springframework.org/schema/aop
         http://www.springframework.org/schema/aop/spring-aop-4.1.xsd">
 
-    <context:component-scan base-package="guava.service, guava.spring"/>
+    <context:component-scan base-package="guava.service, guava.spring, com.neco.service"/>
 
     <bean class="guava.util.SpringContextUtil"/>
 

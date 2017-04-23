@@ -14,7 +14,7 @@
 		http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <mvc:annotation-driven/>
-    <context:component-scan base-package="guava.web"/>
+    <context:component-scan base-package="guava.web,com.neco.controller"/>
 
     <!--定义不被拦截的URI-->
     <mvc:resources mapping="/**/*.html" location="/"/>

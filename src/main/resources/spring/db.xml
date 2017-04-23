@@ -47,11 +47,11 @@
 
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="hikariDataSource"/>
-        <property name="mapperLocations" value="classpath:/guava/mapper/*.xml"/>
+        <property name="mapperLocations" value="classpath:/guava/mapper/*.xml,/com/neco/mapper/*.xml"/>
     </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="guava.dao"/>
+        <property name="basePackage" value="guava.dao,com.neco.dao"/>
         <property name="annotationClass" value="guava.annotation.DbTest"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>

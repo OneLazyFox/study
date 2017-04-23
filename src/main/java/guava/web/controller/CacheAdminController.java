@@ -1,9 +1,9 @@
 package guava.web.controller;
 
 import guava.action.GuavaCacheManager;
-import guava.json.JsonResult;
-import guava.json.PageParams;
-import guava.json.PageResult;
+import com.neco.json.JsonResult;
+import com.neco.json.PageParams;
+import com.neco.json.PageResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
