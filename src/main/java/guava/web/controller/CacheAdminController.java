@@ -1,6 +1,6 @@
 package guava.web.controller;
 
-import guava.action.GuavaCacheManager;
+import guava.cache.guava.GuavaCacheManager;
 import com.neco.json.JsonResult;
 import com.neco.json.PageParams;
 import com.neco.json.PageResult;
