@@ -12,4 +12,8 @@ package guava.http;
  * @version 1.0
  */
 public class SimpleGetTest {
+    public static void main(String[] args) {
+        HttpResult result = HttpHelper.doGet("http://blog.csdn.net/clementad/article/details/46592557");
+        System.out.println(result);
+    }
 }
