@@ -51,7 +51,7 @@
     </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="guava.dao,com.neco.dao"/>
+        <property name="basePackage" value="guava.dao,com.neco.dao,guava.mapper"/>
         <property name="annotationClass" value="guava.annotation.DbTest"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>

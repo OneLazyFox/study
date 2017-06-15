@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:batch="http://www.springframework.org/schema/batch"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/batch
+						http://www.springframework.org/schema/batch/spring-batch.xsd">
+
+    <import resource="../application.xml"/>
+
+    <!--读取和写入csv文件-->
+    <batch:job id="csvJob">
+        <batch:step id="csvStep">
+            <batch:tasklet transaction-manager="transactionManager2">
+            </batch:tasklet>
+        </batch:step>
+    </batch:job>
+
+    <bean id="csvItemReader" class="org.springframework.batch.item.file.FlatFileItemReader">
+        <property name="resource" value="classpath:guava/spring/batch/cvs/inputFile.csv"/>
+        <property name="lineMapper">
+            <bean class="org.springframework.batch.item.file.mapping.DefaultLineMapper">
+                <property name="lineTokenizer" ref="lineTokenizer"/>
+                <property name="fieldSetMapper">
+                    <bean class="org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper">
+                        <property name="prototypeBeanName" value="student"/>
+                    </bean>
+                </property>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="student" class="guava.spring.batch.cvs.Student"/>
+
+    <bean id="lineTokenizer" class="org.springframework.batch.item.file.transform.DelimitedLineTokenizer">
+        <property name="delimiter" value=","/>
+        <property name="names">
+            <list>
+                <value>ID</value>
+                <value>name</value>
+                <value>age</value>
+                <value>score</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="csvItemWriter" class="org.springframework.batch.item.file.FlatFileItemWriter">
+        <property name="resource" value="guava/spring/batch/cvs/outputFile.csv"/>
+        <property name="lineAggregator" ref="lineAggregator"/>
+        <property name="appendAllowed" value="true"/>
+    </bean>
+
+    <bean id="lineAggregator" class="org.springframework.batch.item.file.transform.DelimitedLineAggregator">
+        <property name="delimiter" value=","/>
+        <property name="fieldExtractor">
+            <bean class="org.springframework.batch.item.file.transform.BeanWrapperFieldExtractor">
+                <property name="names" value="name,age,score"/>
+            </bean>
+        </property>
+    </bean>
+</beans>
