@@ -6,6 +6,8 @@ import com.neco.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 /**
  * <p>Title: </p>
  * <p>Description: </p>
@@ -26,6 +28,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void regist(User user) {
+        UUID uuid = UUID.randomUUID();
+        user.setUserAccount(uuid.toString());
         user.setStatus(1);
         userDao.regist(user);
     }

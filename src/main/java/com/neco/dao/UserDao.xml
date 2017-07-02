@@ -4,16 +4,16 @@
     <insert id="regist" parameterType="com.neco.pojo.User">
         INSERT
         INTO
-            user
+            users
             (
-                userCode,
+                userAccount,
                 username,
                 password,
                 status
             )
         VALUES
             (
-                #{userCode},
+                #{userAccount},
                 #{username},
                 #{password},
                 #{status}

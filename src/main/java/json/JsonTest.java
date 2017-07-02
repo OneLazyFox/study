@@ -4,6 +4,8 @@ import com.neco.pojo.Course;
 import com.neco.pojo.School;
 import net.sf.json.JSONObject;
 
+import java.util.UUID;
+
 /**
  * <p>Title: </p>
  * <p>Description: </p>
@@ -17,7 +19,7 @@ import net.sf.json.JSONObject;
  */
 public class JsonTest {
     public static void main(String[] args) {
-        String json = JSONObject.fromObject(Course.class).toString();
-        System.out.println(json);
+        UUID uuid = UUID.randomUUID();
+        System.out.println(uuid);
     }
 }

@@ -17,12 +17,12 @@
     <link href="resources/css/table.css" rel="stylesheet">
 </head>
 <body>
-<form action="#" method="post">
+<form action="${pageContext.request.contextPath}/ajaxCheckName.do" method="post">
     <table>
         <tr>
             <td>
                 <label for="userAccount">用户账号</label>
-                <input type="text" id="userAccount" name="username" onblur="checkName()">
+                <input type="text" id="userAccount" name="userAccount" onblur="checkName()">
             </td>
         </tr>
         <tr>
@@ -56,14 +56,6 @@
 <script type="text/javascript">
 
     function checkName() {
-        $.ajax({
-            url:"/study/ajaxCheckName.do",
-            type:"POST",
-            data:{username:$("#username").val()},
-            success:function (jsonResult) {
-
-            }
-        });
     }
 </script>
 </html>

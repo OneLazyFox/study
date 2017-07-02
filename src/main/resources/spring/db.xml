@@ -3,14 +3,21 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 						http://www.springframework.org/schema/beans/spring-beans.xsd
                         http://www.springframework.org/schema/tx
 						http://www.springframework.org/schema/tx/spring-tx.xsd
                         http://www.springframework.org/schema/context
-                        http://www.springframework.org/schema/context/spring-context.xsd">
+                        http://www.springframework.org/schema/context/spring-context.xsd
+                        http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                        http://mybatis.org/schema/mybatis-spring
+                        http://mybatis.org/schema/mybatis-spring.xsd">
 
     <context:property-placeholder location="classpath:db.properties"/>
+    <!--<mybatis:scan base-package="guava.dao,com.neco.dao"/>-->
+
     <bean id="hikariDataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
         <property name="driverClassName" value="${db.driverClass}"/>
         <property name="jdbcUrl" value="${db.url}"/>
@@ -47,14 +54,14 @@
 
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="hikariDataSource"/>
-        <property name="mapperLocations" value="classpath:/guava/mapper/*.xml,/com/neco/mapper/*.xml"/>
     </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="guava.dao,com.neco.dao,guava.mapper"/>
+        <property name="basePackage" value="guava.dao,com.neco.dao"/>
         <property name="annotationClass" value="guava.annotation.DbTest"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
+
 
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="hikariDataSource"/>

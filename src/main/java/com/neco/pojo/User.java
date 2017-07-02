@@ -17,6 +17,10 @@ public class User {
      */
     private String userCode;
     /**
+     * UUID
+     */
+    private String userAccount;
+    /**
      * 姓名
      */
     private String username;
@@ -59,5 +63,13 @@ public class User {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public String getUserAccount() {
+        return userAccount;
+    }
+
+    public void setUserAccount(String userAccount) {
+        this.userAccount = userAccount;
     }
 }
